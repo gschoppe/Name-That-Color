@@ -19,6 +19,7 @@ $text         = ( !empty( $_REQUEST['text'] ) ) ? trim( $_REQUEST['text'] ) : ""
 $attributes   = array_filter( explode( ' ', $text ) );
 
 $flags = array();
+$force_format = "hex";
 while( !empty( $attributes[0] ) && strlen( $attributes[0] ) > 1 && $attributes[0][0] == '-' ) {
 	$flag = array_shift( $attributes );
 	if(substr($flag, 0, 3) == '-o=') {
@@ -131,25 +132,25 @@ if( in_array( 'h', $flags ) || !$text || $text == 'help') {
 	foreach( $attributes as $attribute ) {
 		if( !in_array( 'r', $flags ) ) {
 			$verification_colors[] = $attribute['object']->toHex();
-			if( $force_format ) {
-				$format = $force_format;
-			} else {
+			if( $force_format == 'input' ) {
 				$format = $attribute['type'];
+			} else {
+				$format = $force_format;
 			}
 			$color = $ntc->name_color( $attribute['object'] );
 			if( in_array( 'n', $flags ) ) {
 				$output = $ntc->format_color( $color[0], $format );
 			} else {
-				if( $force_format && $format != $attribute['type'] ) {
-					$output = $ntc->format_color( $attribute['object'], $format );
-				} else {
-					$output = $attribute['string'];
-				}
-
+				$input  = $ntc->format_color( $attribute['object'], $attribute['type'] );
+				$output = $ntc->format_color( $attribute['object'], $format );
 			}
-			$message_text .= "The color " . $output . " should be named *" . $color[1] . "*\n";
+			$message_text .= "The color " . $input;
+			if( $input != $output ) {
+				$message_text .= " ( " . $output . " in " . $format . ")";
+			}
+			$message_text .= " should be named *" . $color[1] . "*\n";
 		} else {
-			if( $force_format ) {
+			if( $force_format != "input" ) {
 				$format = $force_format;
 			} else {
 				$format = 'hex';

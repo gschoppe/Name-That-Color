@@ -372,7 +372,7 @@ class Color {
 	}
 
 	/**
-	 * Get Hue/Saturation/Lightness for the current color
+	 * Get Cyan/Magenta/Yellow/Key for the current color
 	 *
 	 * @return array
 	 */

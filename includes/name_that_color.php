@@ -51,11 +51,12 @@ class NameThatColor {
 		$best_dist  = -1;
 
 		for( $i = 0; $i < count( $this->colors ); $i++) {
-			if( $name == $this->colors[$i][3] ) {
-				$match->fromHex( $this->colors[$i][0] );
-				return array( $match, $this->colors[$i][1], true );
+			$current_color = $this->colors[$i];
+			if( $name == $current_color[3] ) {
+				$match->fromHex( $current_color[0] );
+				return array( $match, $current_color[1], true );
 			}
-			$distance = levenshtein( $name, $color_name );
+			$distance = levenshtein( $name, $current_color[3] );
 			if( $best_dist < 0 || $distance < $best_dist ) {
 				$best_dist  = $distance;
 				$best_index = $i;
@@ -96,17 +97,17 @@ class NameThatColor {
 			case 'hex':
 				return '#' . $color->toHex();
 			case 'rgb':
-				$rgb = $color->toRgb();
+				$rgb = $color->toRgbInt();
 				return 'rgb(' . implode( ',', $rgb ) . ')';
 			case 'hsl':
-				$hsl = $color->toHsl();
+				$hsl = $color->toHslFloat();
 				$hsl['sat'] *= 100;
 				$hsl['lightness'] *= 100;
 				return 'hsl(' . $hsl['hue'] . ',' . $hsl['sat'] . '%,' . $hsl['lightness'] . '%)';
 			case 'cmyk':
-				$cmyk = $color->toCmyk();
+				$cmyk = $color->toCmykFloat();
 				$cmyk = array_map(function( $a ) {
-					return ( $a * 100 ) . '%';
+					return round( $a * 100, 2 ) . '%';
 				}, $cmyk);
 				return 'cmyk(' . implode( ',', $cmyk ) . ')';
 		}
