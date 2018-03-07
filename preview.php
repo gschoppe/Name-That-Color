@@ -15,7 +15,7 @@ function get_pair_from_hex( $hex ) {
 	$canonical = $ntc->name_color( $a );
 	$b = $canonical[0];
 	return array(
-		array( $a, '[user-sumbmitted]', '#' . $a->toHex() ),
+		array( $a, '[user-submitted]', '#' . $a->toHex() ),
 		array( $b, '#' . $canonical[0]->toHex(), $canonical[1] )
 	);
 }
