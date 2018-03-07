@@ -252,8 +252,8 @@ class NameThatColor {
 
 	private function parse_hex( $str ) {
 		$str = strtoupper( trim( $str, ' #' ) );
-		if( strlen( $str == 3 ) ) {
-			$str = implode( '', array_map( array( $this, 'double_char' ), str_split( $hex ) ) );
+		if( strlen( $str ) == 3 ) {
+			$str = implode( '', array_map( array( $this, 'double_char' ), str_split( $str ) ) );
 		}
 		$color = new Color();
 		$color->fromHex( $str );

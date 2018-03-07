@@ -158,7 +158,7 @@ if( in_array( 'h', $flags ) || !$text || $text == 'help') {
 			$color  = $ntc->color_from_name( $attribute );
 			$output = $ntc->format_color( $color[0], $format );
 			$verification_colors[] =  $color[0]->toHex();
-			$message_text .= "The color name *" . $color[1] . "* has the tone #" . $output . "\n";
+			$message_text .= "The color name *" . $color[1] . "* has the tone " . $output . "\n";
 		}
 
 		if( in_array( 'c', $flags ) ) {
